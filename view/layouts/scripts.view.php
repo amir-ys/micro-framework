@@ -1,0 +1,1 @@
+<link href="<?= asset('/assets/dist/js/bootstrap.bundle.min.js') ?>" rel="stylesheet">
