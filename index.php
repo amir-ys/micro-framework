@@ -1,6 +1,6 @@
 <?php
-define('DISPLAY_ERROR', true);
-define('BASE_PATH', __DIR__);
+const DISPLAY_ERROR = true;
+const BASE_PATH = __DIR__;
 
 //display error
 if (DISPLAY_ERROR) {
@@ -11,14 +11,12 @@ if (DISPLAY_ERROR) {
     ini_set('display_errors', 0);
     ini_set('display_startup_errors', 0);
     error_reporting(0);
-
 }
 
 
 require 'core/functions/helpers.php';
 
 define('CURRENT_DOMAIN', currentDomain() . '/');
-
 
 require 'core/route/router.php';
 

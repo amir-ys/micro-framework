@@ -40,3 +40,8 @@ function view($view): string
 {
     return $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . trim($view, '/ ');
 }
+
+function isUrl($url) :int
+{
+    return $_SERVER['REQUEST_URI'] == $url;
+}
