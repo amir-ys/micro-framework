@@ -19,10 +19,4 @@ require 'core/functions/helpers.php';
 define('CURRENT_DOMAIN', currentDomain() . '/');
 
 require 'core/route/router.php';
-require 'core/database/MysqlDB.php';
-
-//config
-define('DB_HOST' , 'localhost');
-define('DB_NAME' , 'blog');
-define('DB_USERNAME' , 'root');
-define('DB_PASSWORD' , 'mysql');
+require 'core/database/Database.php';
