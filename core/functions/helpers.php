@@ -1,5 +1,7 @@
 <?php
 
+define('CURRENT_DOMAIN', currentDomain() . '/');
+
 function dd($value): void
 {
     echo '<pre>';
