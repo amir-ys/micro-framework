@@ -1,3 +1,3 @@
 <?php
 
- require  __DIR__ . '/../view/index.view.php';
+ require view('index.view.php');
