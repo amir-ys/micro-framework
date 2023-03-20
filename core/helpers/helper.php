@@ -38,11 +38,22 @@ function isUrl($url): int
 
 function asset($url): string
 {
-    return currentUrl() . DS . 'template' . DS . $url;
+    return currentDomain() . DS . 'template' . DS . $url;
 }
 
 function view($view, $attribute = []): string
 {
     extract($attribute);
-    return base_path('view' . DS . trim($view, ' /'));
+    return base_path('views' . DS . trim($view, ' /'));
+}
+
+function abort($code = 404){
+    http_response_code($code);
+    $error = view("errors/$code.view.php");
+    if (file_exists($error)){
+        require $error;
+    }else {
+        require view("errors/404.view.php");
+    }
+    die();
 }

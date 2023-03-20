@@ -7,13 +7,12 @@ $routes =
         '/' => 'controllers/index.php' ,
         '/about' => 'controllers/about.php' ,
         '/contact' => 'controllers/contact.php' ,
+        '/categories' => 'controllers/category/index.php' ,
+        '/categories' => 'controllers/category/show.php' ,
     ];
-
-
 if (array_key_exists($uri , $routes)){
-     require BASE_PATH . '/' . $routes[$uri];
+     require base_path($routes[$uri]);
 }else{
-    echo 'sorry , not found';
-    die();
+    abort(404);
 }
 
