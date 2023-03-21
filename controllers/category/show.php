@@ -2,11 +2,9 @@
 
 $db = new Database();
 
-if ($_GET['id'] == 1){
-    abort(403);
-}
+authorize($_GET['id'] == 1);
 
-$category = $db->query('select * from categories where id = :id' ,  [':id' => $_GET['id']])->fetch();
+$category = $db->query('select * from categories where id = :id' ,  [':id' => $_GET['id']])->findOrFail();
 
 require view('categories/show.view.php' , [
     'header' => 'categories - show' ,
