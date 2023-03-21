@@ -57,3 +57,9 @@ function abort($code = 404){
     }
     die();
 }
+
+function authorize($condition){
+    if ($_GET['id'] == 1){
+        abort(Response::FORBIDDEN);
+    }
+}
