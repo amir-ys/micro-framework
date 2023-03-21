@@ -19,6 +19,10 @@
            <?php foreach ($categories as $category): ?>
                <div class="card border border-2 mb-md-1">
                    <div class="card-body">
+                       <div class="text-left mb-md-2">
+                           <a class="btn btn-warning" href="categories/edit?id=<?= $category->id ?>" >edit</a>
+                           <a class="btn btn-danger" href="categories/destroy?id=<?= $category->id ?>" >delete</a>
+                       </div>
                        <ul>
                            <li> id :  <?= $category->id ?> </li>
                            <li> title :  <?= $category->title ?> </li>

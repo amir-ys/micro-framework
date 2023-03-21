@@ -13,6 +13,7 @@ $routes =
         '/categories/store' => 'controllers/category/store.php',
         '/categories/edit' => 'controllers/category/edit.php',
         '/categories/update' => 'controllers/category/update.php',
+        '/categories/destroy' => 'controllers/category/destroy.php',
     ];
 if (array_key_exists($uri, $routes)) {
     require base_path($routes[$uri]);
