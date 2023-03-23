@@ -2,7 +2,7 @@
 
 use Core\Database;
 
-$db = new Database();
+$db = \Core\App::resolve(Database::class);
 authorize(!isset($_GET['id']));
 
 $category = $db->query('select * from categories  where id = :id ' , [':id' => $_GET['id']])->findOrFail();

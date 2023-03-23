@@ -2,7 +2,7 @@
 
 use Core\Database;
 
-$db = new Database();
+$db = \Core\App::resolve(Database::class);
 
 $categories = $db->query('select * from categories')->get();
 

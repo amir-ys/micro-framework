@@ -3,7 +3,7 @@
 use Core\Database;
 use Core\Validator;
 
-$db = new Database();
+$db = \Core\App::resolve(Database::class);
 authorize(method() != 'POST');
 Validator::required('title');
 
