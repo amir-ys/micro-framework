@@ -7,14 +7,19 @@ function base_path($url): string
     return BASE_PATH . DIRECTORY_SEPARATOR . $url;
 }
 
-function dd($value): void
+function dump(...$value): void
 {
     echo '<pre>';
-    echo print_r($value, true) . PHP_EOL;
+    echo print_r(...$value) . PHP_EOL;
     echo '</pre>';
+}
 
+function dd(...$value): void
+{
+    dump(...$value);
     die();
 }
+
 
 function protocol(): string
 {
@@ -77,17 +82,38 @@ function redirect($path)
     die();
 }
 
-function showMessageInView($name = 'errors', $type = 'danger')
+function showMessageInView($name = 'error', $type = 'danger')
 {
-    if (!empty($_SESSION[$name])) :
-        echo sprintf("<div class='alert alert-%s'>" , $type);
-        echo $_SESSION[$name];
-        session_destroy();
+    if (empty($_SESSION[$name])) {
+        return;
+    }
+
+    if (count($_SESSION[$name]) > 1) {
+        foreach ($_SESSION[$name] as $message):
+            echo sprintf("<div class='alert alert-%s'>", $message['type']);
+            echo $message['title'];
+            if (!empty($message['body'])) {
+                echo '<br><small>' . $message['body'] . '</smaall>';
+            }
+            echo "</div>";
+        endforeach;
+    } else {
+        echo sprintf("<div class='alert alert-%s'>", $_SESSION[$name][0]['type']);
+        echo $_SESSION[$name][0]['title'];
+        if (!empty($_SESSION[$name][0]['body'])) {
+            echo '<br><small>' . $_SESSION[$name][0]['body'] . '</smaall>';
+        }
         echo "</div>";
-    endif;
+    }
+    session_destroy();
 }
 
-function newFeedback($message)
+function newFeedback($title = "عملیات با موفقیت انجام شد.", $type = 'message', $body = '')
 {
-    $_SESSION['message'] = $message;
+    $name = $type == "message" ? 'message' : 'error';
+    $cssClass = $type == "message" ? 'success' : 'danger';
+
+    $session = $_SESSION[$name] ?? [];
+    $session[] = ['title' => $title, 'body' => $body, 'type' => $cssClass];
+    $_SESSION[$name] = $session;
 }

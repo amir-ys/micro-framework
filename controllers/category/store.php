@@ -3,7 +3,7 @@
 $db = new Database();
 authorize(method() != 'POST');
 if (empty($_POST['title'])) {
-    $_SESSION['errors'] = 'the title field is required';
+    newFeedback('the title field is required' , 'error');
     return redirect('/categories/create');
 }
 
