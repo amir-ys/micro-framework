@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-group">
                             <label for="description">description</label>
-                            <textarea name="description" value="<?= $category->description ?>"   class="form-control" id="" cols="30" rows="10"></textarea>
+                            <textarea name="description"  class="form-control" id="" cols="30" rows="10"><?= $category->description ?></textarea>
                         </div>
 
                         <div class="form-group mt-md-3">

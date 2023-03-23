@@ -82,38 +82,72 @@ function redirect($path)
     die();
 }
 
-function showMessageInView($name = 'error', $type = 'danger')
+function back()
 {
-    if (empty($_SESSION[$name])) {
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    die();
+}
+
+function showMessageInView()
+{
+    $feedbacks = ['success_feedback', 'error_feedback', 'validation_feedback'];
+    if (empty($_SESSION[$feedbacks[0]]) && empty($_SESSION[$feedbacks[1]]) && empty($_SESSION[$feedbacks[2]])) {
         return;
     }
 
-    if (count($_SESSION[$name]) > 1) {
-        foreach ($_SESSION[$name] as $message):
-            echo sprintf("<div class='alert alert-%s'>", $message['type']);
-            echo $message['title'];
-            if (!empty($message['body'])) {
-                echo '<br><small>' . $message['body'] . '</smaall>';
+    foreach ($feedbacks as $feedback) {
+        if (isset($_SESSION[$feedback]) && count($_SESSION[$feedback]) > 1) {
+            foreach ($_SESSION[$feedback] as $message):
+                echo sprintf("<div class='alert alert-%s'>", $message['type']);
+                echo $message['title'];
+                if (!empty($message['body'])) {
+                    echo '<br><small>' . $message['body'] . '</smaall>';
+                }
+                echo "</div>";
+            endforeach;
+        } else {
+            if (isset($_SESSION[$feedback])) {
+                echo sprintf("<div class='alert alert-%s'>", $_SESSION[$feedback][0]['type']);
+                echo $_SESSION[$feedback][0]['title'];
+                if (!empty($_SESSION[$feedback][0]['body'])) {
+                    echo '<br><small>' . $_SESSION[$feedback][0]['body'] . '</smaall>';
+                }
+                echo "</div>";
             }
-            echo "</div>";
-        endforeach;
-    } else {
-        echo sprintf("<div class='alert alert-%s'>", $_SESSION[$name][0]['type']);
-        echo $_SESSION[$name][0]['title'];
-        if (!empty($_SESSION[$name][0]['body'])) {
-            echo '<br><small>' . $_SESSION[$name][0]['body'] . '</smaall>';
         }
-        echo "</div>";
     }
+
     session_destroy();
 }
 
-function newFeedback($title = "عملیات با موفقیت انجام شد.", $type = 'message', $body = '')
+function feedback($name, $title, $type, $body)
 {
-    $name = $type == "message" ? 'message' : 'error';
-    $cssClass = $type == "message" ? 'success' : 'danger';
-
     $session = $_SESSION[$name] ?? [];
-    $session[] = ['title' => $title, 'body' => $body, 'type' => $cssClass];
+    $session[] = ['title' => $title, 'body' => $body, 'type' => $type];
     $_SESSION[$name] = $session;
+}
+
+function successFeedback($title = "عملیات با موفقیت انجام شد.", $body = '')
+{
+    feedback('success_feedback', $title, 'success', $body);
+}
+
+function errorFeedback($title = "عملیات ناموفق.", $body = '')
+{
+    feedback('error_feedback', $title, 'danger', $body);
+}
+
+function validationFeedback($title, $body = null)
+{
+    feedback('validation_feedback', $title, 'danger', $body);
+}
+
+
+function hasAnyFeedback($type = 'error')
+{
+    $type = $type . '_feedback';
+    if (isset($_SESSION[$type]) && count($_SESSION[$type]) > 0) {
+        return true;
+    }
+    return false;
 }
