@@ -6,7 +6,8 @@ const BASE_PATH = __DIR__;
 require 'core/helpers/helper.php';
 
 spl_autoload_register(function ($class) {
-    require base_path("core/$class" . ".php");
+    $classPath = str_replace('\\', DIRECTORY_SEPARATOR, $class);
+    require base_path("{$class}" . ".php");
 });
 
 require base_path('core/config/error.php');

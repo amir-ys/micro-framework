@@ -18,6 +18,6 @@ $routes =
 if (array_key_exists($uri, $routes)) {
     require base_path($routes[$uri]);
 } else {
-    abort(404);
+    abort(Response::NOT_FOUND);
 }
 

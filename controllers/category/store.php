@@ -1,5 +1,8 @@
 <?php
 
+use Core\Database;
+use Core\Validator;
+
 $db = new Database();
 authorize(method() != 'POST');
 

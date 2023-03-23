@@ -1,7 +1,8 @@
 <?php
 
-$db = new Database();
+use Core\Database;
 
+$db = new Database();
 authorize($_GET['id'] == 1);
 
 $category = $db->query('select * from categories where id = :id' ,  [':id' => $_GET['id']])->findOrFail();

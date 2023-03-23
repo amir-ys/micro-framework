@@ -57,14 +57,14 @@ function view($view, $attribute = []): string
     return base_path('views' . DS . trim($view, ' /'));
 }
 
-function abort($code = 404)
+function abort($code = Response::NOT_FOUND)
 {
     http_response_code($code);
     $error = view("errors/$code.view.php");
     if (file_exists($error)) {
         require $error;
     } else {
-        require view("errors/404.view.php");
+        require view("errors/" . Response::NOT_FOUND . ".view.php");
     }
     die();
 }
