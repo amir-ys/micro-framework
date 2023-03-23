@@ -10,13 +10,13 @@ function base_path($url): string
 function dump(...$value): void
 {
     echo '<pre>';
-    echo print_r(...$value) . PHP_EOL;
+    echo var_dump(...$value) . PHP_EOL;
     echo '</pre>';
 }
 
 function dd(...$value): void
 {
-    dump(...$value);
+    dump($value);
     die();
 }
 
