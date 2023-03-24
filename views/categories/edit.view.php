@@ -16,6 +16,7 @@
             <div class="card border border-2 mb-md-1">
                 <div class="card-body">
                     <form action="/categories/update?id=<?= $category->id ?>" method="post">
+                        <input type="hidden" name="_method" value="PATCH">
                         <div class="form-group">
                             <label for="title">title</label>
                             <input type="text" name="title"  value="<?= $category->title ?>" class="form-control" id="title">
