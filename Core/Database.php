@@ -8,7 +8,7 @@ class Database
     protected $conn;
     private $statement;
 
-    public function __construct()
+    public function __construct(private $config)
     {
         $this->connect();
     }
@@ -41,8 +41,7 @@ class Database
     }
     private function getDatabaseConfig(): string
     {
-        $config = require 'core/config/database.php';
-        return http_build_query($config, '', ';');
+        return http_build_query($this->config, '', ';');
     }
 
     private function connect(): void
