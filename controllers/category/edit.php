@@ -1,11 +1,11 @@
 <?php
 
-use Core\Database;
 
-$db = \Core\App::resolve(Database::class);
+use Core\Database\QueryBuilder;
+
 authorize(!isset($_GET['id']));
 
-$category = $db->query('select * from categories  where id = :id ' , [':id' => $_GET['id']])->findOrFail();
+$category = \Core\App::resolve(QueryBuilder::class)->findOrFail('categories' , $_GET['id']);
 
 require view('categories/edit.view.php' , [
     'header' => 'categories - create' ,

@@ -1,5 +1,7 @@
 <?php
 
+use Core\Response;
+
 require base_path('core/helpers/constant.php');
 
 function base_path($url): string

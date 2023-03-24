@@ -1,15 +1,13 @@
 <?php
 
-use Core\Database;
+use Core\Database\Connection;
+use Core\Database\QueryBuilder;
 use Core\Validator;
 
-$db = \Core\App::resolve(Database::class);
-authorize(method() != 'POST');
 Validator::required('title');
 
-
-$category = $db->query('update categories set title = :title ,   description = :description , created_at = now() where id = :id', [
-    ':title' => $_POST['title'], ':description' => $_POST['description'] , 'id' => $_GET['id']]);
+\Core\App::resolve(QueryBuilder::class)->update('categories', $_GET['id'] , [
+    'title' => $_POST['title'], 'description' => $_POST['description'], 'created_at' => date('Y-m-d H:i:s')]);
 
 successFeedback('categories updated successfully');
 redirect('/categories');

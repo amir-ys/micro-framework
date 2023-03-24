@@ -1,10 +1,9 @@
 <?php
 
-use Core\Database;
+use Core\Database\Connection;
+use Core\Database\QueryBuilder;
 
-$db = \Core\App::resolve(Database::class);
-
-$categories = $db->query('select * from categories')->get();
+$categories = \Core\App::resolve(QueryBuilder::class)->all('categories');
 
 require  view('categories/index.view.php' , [
     'header' => 'categories - index' ,

@@ -1,11 +1,8 @@
 <?php
 
-use Core\Database;
+use Core\Database\QueryBuilder;
 
-$db = \Core\App::resolve(Database::class);
-authorize(method() != 'GET');
-
-$category = $db->query('delete from categories where id = :id' ,  [':id' => $_GET['id']]);
+$category = \Core\App::resolve(QueryBuilder::class)->delete('categories' , $_GET['id']);
 
 successFeedback('categories deleted successfully');
 redirect('/categories');

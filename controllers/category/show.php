@@ -1,11 +1,12 @@
 <?php
 
-use Core\Database;
+use Core\Database\Connection;
+use Core\Database\QueryBuilder;
 
-$db = \Core\App::resolve(Database::class);
+$db = \Core\App::resolve(Connection::class);
 authorize($_GET['id'] == 1);
 
-$category = $db->query('select * from categories where id = :id' ,  [':id' => $_GET['id']])->findOrFail();
+$category = \Core\App::resolve(QueryBuilder::class)->findOrFail('categories' , $_GET['id']);
 
 require view('categories/show.view.php' , [
     'header' => 'categories - show' ,

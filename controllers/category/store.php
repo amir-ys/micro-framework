@@ -1,16 +1,15 @@
 <?php
 
-use Core\Database;
+use Core\Database\QueryBuilder;
 use Core\Validator;
 
-$db = \Core\App::resolve(Database::class);
 authorize(method() != 'POST');
 
 Validator::required('title');
-Validator::min('title' , 2);
+Validator::min('title', 2);
 
-$category = $db->query('insert into categories(title , description , created_at) values(:title , :description , :now )', [
-    ':title' => $_POST['title'], ':description' => $_POST['description'], ':now' => date('Y-m-d H:i:s') ]);
+\Core\App::resolve(QueryBuilder::class)->create('categories', [
+    'title' => $_POST['title'], 'description' => $_POST['description'], 'created_at' => date('Y-m-d H:i:s')]);
 
 successFeedback('categories created successfully');
 redirect('/categories');
