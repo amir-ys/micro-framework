@@ -56,7 +56,7 @@ function asset($url): string
 function view($view, $attribute = [])
 {
     extract($attribute);
-    return require base_path('views' . DIRECTORY_SEPARATOR . trim($view, ' /'));
+    return require base_path('views' . DIRECTORY_SEPARATOR . trim("$view.view.php", ' /'));
 }
 
 function abort($code = Response::NOT_FOUND)

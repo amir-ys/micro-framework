@@ -18,18 +18,18 @@ class CategoryController
     public function index()
     {
         $categories = $this->queryBuilder->all('categories');
-        return view('categories/index.view.php', compact('categories'));
+        return view('categories/index', compact('categories'));
     }
 
     public function show()
     {
         $category = $this->queryBuilder->findOrFail('categories', $_GET['id']);
-        return view('categories/show.view.php', compact('category'));
+        return view('categories/show', compact('category'));
     }
 
     public function create()
     {
-        return view('categories/create.view.php');
+        return view('categories/create');
     }
 
     public function store()
@@ -49,7 +49,7 @@ class CategoryController
     public function edit()
     {
         $category = $this->queryBuilder->findOrFail('categories', $_GET['id']);
-        return view('categories/edit.view.php', compact('category'));
+        return view('categories/edit', compact('category'));
     }
 
     public function update()
