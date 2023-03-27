@@ -19,6 +19,10 @@ class Container
             throw new Exception("not matching binding for key $key");
         }
 
+        if (is_array($this->bindings[$key])){
+           return $this->bindings[$key];
+        }
+
        return call_user_func($this->bindings[$key]);
     }
 }
