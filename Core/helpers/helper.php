@@ -63,9 +63,9 @@ function abort($code = Response::NOT_FOUND)
 {
     http_response_code($code);
     if (file_exists(base_path("/views/errors/$code.view.php"))) {
-        return view("errors/$code.view.php");
+        return view("errors/$code");
     } else {
-        return view("errors/" . Response::NOT_FOUND . ".view.php");
+        return view("errors/" . Response::NOT_FOUND);
     }
 }
 
