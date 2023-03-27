@@ -35,7 +35,7 @@ class Router
     {
         foreach ($this->routes as $route) {
             if ($route['uri'] == $uri && $route['method'] == $method) {
-               return require base_path($route['controller']);
+               return $this->loadController(...explode('@', $route['controller']));
             }
         }
 
@@ -55,5 +55,21 @@ class Router
     private function abort(): void
     {
         abort(Response::NOT_FOUND);
+    }
+
+    private function loadController($class, $method)
+    {
+        $controllerPath = App::resolve('config.app')['controller_path'];
+        $classPath = $controllerPath . $class;
+        if (!class_exists($classPath)) {
+            throw new \Exception("target class $classPath does not exists");
+        }
+
+        if (!method_exists($classPath, $method)) {
+            throw new \Exception("method $method not found in  $classPath class");
+        }
+
+        $classObj = new $classPath();
+        return $classObj->$method();
     }
 }
