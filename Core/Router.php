@@ -6,44 +6,32 @@ class Router
 {
     public array $routes = [];
 
-    public function get(string $uri, string $controller): void
+    public function get(string $uri, array|string $controller): void
     {
         $this->base($uri, $controller, 'GET');
     }
 
-    public function post(string $uri, string $controller): void
+    public function post(string $uri, array|string $controller): void
     {
         $this->base($uri, $controller, 'POST');
     }
 
-    public function patch(string $uri, string $controller): void
+    public function patch(string $uri, array|string $controller): void
     {
         $this->base($uri, $controller, 'PATCH');
     }
 
-    public function delete(string $uri, string $controller): void
+    public function delete(string $uri, array|string $controller): void
     {
         $this->base($uri, $controller, 'DELETE');
     }
 
-    public function put(string $uri, string $controller): void
+    public function put(string $uri, array|string $controller): void
     {
         $this->base($uri, $controller, 'PUT');
     }
 
-    public function router($uri, $method)
-    {
-        foreach ($this->routes as $route) {
-            if ($route['uri'] == $uri && $route['method'] == $method) {
-               return $this->loadController(...explode('@', $route['controller']));
-            }
-        }
-
-        $this->abort();
-
-    }
-
-    private function base($uri, $controller, $method)
+    private function base($uri, array|string $controller, $method)
     {
         $this->routes[] = [
             'uri' => $uri,
@@ -57,10 +45,27 @@ class Router
         abort(Response::NOT_FOUND);
     }
 
-    private function loadController($class, $method)
+    public function router($uri, $method)
     {
-        $controllerPath = App::resolve('config.app')['controller_path'];
-        $classPath = $controllerPath . $class;
+        foreach ($this->routes as $route) {
+            if ($route['uri'] == $uri && $route['method'] == $method) {
+                if (is_array($route['controller'])) {
+                    return $this->loadController($route['controller'][0], $route['controller'][1]);
+                } else {
+                    $action = explode('@', $route['controller']);
+                    $classPath = App::resolve('config.app')['controller_path'] . $action[0];
+                    $method = $action[1];
+                    return $this->loadController($classPath, $method);
+                }
+            }
+        }
+
+        $this->abort();
+
+    }
+
+    private function loadController($classPath, $method)
+    {
         if (!class_exists($classPath)) {
             throw new \Exception("target class $classPath does not exists");
         }
