@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <?php include view('layouts/head.view.php') ?>
+    <?php include base_path('/views/layouts/head.view.php') ?>
 </head>
 <body>
 
 <div class="container">
-    <?php include view('layouts/header.view.php') ?>
-    <?php include view('layouts/navbar.view.php') ?>
+    <?php  include base_path('/views/layouts/header.view.php') ?>
+    <?php  include base_path('/views/layouts/navbar.view.php') ?>
 </div>
 <main class="container">
     <div class="p-4 p-md-5 mb-4 rounded text-bg-dark">
@@ -217,5 +217,5 @@
 </main>
 
 </body>
-<?php include view('layouts/scripts.view.php')?>
+<?php include base_path('/views/layouts/scripts.view.php')?>
 </html>

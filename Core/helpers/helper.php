@@ -12,7 +12,7 @@ function base_path($url): string
 function dump(...$value): void
 {
     echo '<pre>';
-    echo var_dump(...$value) . PHP_EOL;
+    echo var_dump($value) . PHP_EOL;
     echo '</pre>';
 }
 
@@ -53,22 +53,20 @@ function asset($url): string
     return currentDomain() . DS . 'template' . DS . $url;
 }
 
-function view($view, $attribute = []): string
+function view($view, $attribute = [])
 {
     extract($attribute);
-    return base_path('views' . DS . trim($view, ' /'));
+    return require base_path('views' . DIRECTORY_SEPARATOR . trim($view, ' /'));
 }
 
 function abort($code = Response::NOT_FOUND)
 {
     http_response_code($code);
-    $error = view("errors/$code.view.php");
-    if (file_exists($error)) {
-        require $error;
+    if (file_exists(base_path("/views/errors/$code.view.php"))) {
+        return view("errors/$code.view.php");
     } else {
-        require view("errors/" . Response::NOT_FOUND . ".view.php");
+        return view("errors/" . Response::NOT_FOUND . ".view.php");
     }
-    die();
 }
 
 function authorize($condition)
