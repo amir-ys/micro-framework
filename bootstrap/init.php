@@ -6,11 +6,8 @@ const BASE_PATH = __DIR__ . '/../';
 
 require BASE_PATH . '/Helpers/helpers.php';
 
-//autoloader
-spl_autoload_register(function ($class) {
-    $classPath = str_replace('\\', DIRECTORY_SEPARATOR, $class);
-    require base_path("{$class}" . ".php");
-});
+#autoloader
+require base_path('vendor/autoload.php');
 
 $dotenv = Dotenv\Dotenv::createImmutable(BASE_PATH);
 $dotenv->load();
