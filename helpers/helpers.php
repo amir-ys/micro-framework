@@ -2,7 +2,7 @@
 
 use Core\Response;
 
-require base_path('core/helpers/constant.php');
+require base_path('Helpers/constant.php');
 
 function base_path($url): string
 {

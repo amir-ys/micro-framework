@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers;
+namespace App\Controllers;
 
 use Core\App;
 use Core\Database\QueryBuilder;
