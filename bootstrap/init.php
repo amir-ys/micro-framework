@@ -12,6 +12,8 @@ spl_autoload_register(function ($class) {
     require base_path("{$class}" . ".php");
 });
 
+$dotenv = Dotenv\Dotenv::createImmutable(BASE_PATH);
+$dotenv->load();
 
 (new \App\DI\Services())->register();
 
