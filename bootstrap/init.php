@@ -6,7 +6,7 @@ const BASE_PATH = __DIR__ . '/../';
 
 require BASE_PATH . '/Helpers/helpers.php';
 
-
+//autoloader
 spl_autoload_register(function ($class) {
     $classPath = str_replace('\\', DIRECTORY_SEPARATOR, $class);
     require base_path("{$class}" . ".php");
@@ -15,10 +15,8 @@ spl_autoload_register(function ($class) {
 
 (new \App\DI\Services())->register();
 
-
+#todo load config in ether place
 require base_path('configs/error.php');
-require base_path('routes/web.php');
 
-$uri = parse_url($_SERVER['REQUEST_URI'])['path'];
-$method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
-$router->router($uri, $method);
+require base_path('routes/web.php');
+(new \Core\Router\Router())->run();

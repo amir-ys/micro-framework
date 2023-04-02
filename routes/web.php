@@ -1,16 +1,17 @@
 <?php
 
-$router = new Core\Router();
+
+use Core\Router\Route;
 
 
-$router->get('/', 'HomeController@index');
-$router->get('/about', 'HomeController@about');
-$router->get('/contact', 'HomeController@contact');
+Route::get('/', 'HomeController@index');
+Route::get('/about', 'HomeController@about');
+Route::get('/contact', 'HomeController@contact');
 
-$router->get('/categories', [App\Controllers\CategoryController::class, 'index']);
-$router->get('/categories/show', [App\Controllers\CategoryController::class, 'show']);
-$router->get('/categories/create', [App\Controllers\CategoryController::class, 'create']);
-$router->post('/categories/store', [App\Controllers\CategoryController::class, 'store']);
-$router->get('/categories/edit', [App\Controllers\CategoryController::class, 'edit']);
-$router->patch('/categories/update', [App\Controllers\CategoryController::class, 'update']);
-$router->delete('/categories/destroy', [App\Controllers\CategoryController::class, 'destroy']);
+Route::get('/categories', [App\Controllers\CategoryController::class, 'index']);
+Route::get('/categories/show', [App\Controllers\CategoryController::class, 'show']);
+Route::post('/categories/create', [App\Controllers\CategoryController::class, 'create']);
+Route::post('/categories/store', [App\Controllers\CategoryController::class, 'store']);
+Route::get('/categories/edit', [App\Controllers\CategoryController::class, 'edit']);
+Route::patch('/categories/update', [App\Controllers\CategoryController::class, 'update']);
+Route::delete('/categories/destroy', [App\Controllers\CategoryController::class, 'destroy']);
