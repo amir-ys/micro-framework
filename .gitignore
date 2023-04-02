@@ -1,6 +1,5 @@
-.idea
+/.idea/*
 vcs.xml
 php.xml
 /vendor/
 .env
-/.idea/*
