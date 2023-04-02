@@ -16,7 +16,7 @@ spl_autoload_register(function ($class) {
 (new \App\DI\Services())->register();
 
 
-require base_path('core/config/error.php');
+require base_path('configs/error.php');
 require base_path('routes/web.php');
 
 $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
