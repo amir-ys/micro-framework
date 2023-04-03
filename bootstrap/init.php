@@ -15,6 +15,9 @@ $dotenv->load();
 (new \App\DI\Services())->register();
 
 #todo load config in ether place
+
+$GLOBALS["request"] = new \Core\Request();
+
 require base_path('configs/error.php');
 
 require base_path('routes/web.php');

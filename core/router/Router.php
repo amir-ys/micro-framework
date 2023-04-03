@@ -68,8 +68,8 @@ class Router
             throw new \Exception("method $method not found in  $classPath class");
         }
 
-        $classObj = new $classPath();
-        return $classObj->$method();
+        $classObj = new $classPath($GLOBALS["request"]);
+        return $classObj->$method($GLOBALS["request"]);
     }
 
 }
