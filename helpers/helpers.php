@@ -156,3 +156,8 @@ function request(): \Core\Request
 {
     return $GLOBALS["request"];
 }
+
+function now(): string
+{
+   return date('Y-m-d H:i:s');
+}

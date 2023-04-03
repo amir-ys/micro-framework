@@ -42,7 +42,8 @@ class CategoryController
             [
                 'title' => $request->title,
                 'description' => $request->description,
-                'created_at' => date('Y-m-d H:i:s')
+                'created_at' => now()
+
             ]);
 
         successFeedback('categories created successfully');
@@ -63,7 +64,8 @@ class CategoryController
         $this->category->update($request->id, [
             'title' => $request->title,
             'description' => $request->description,
-            'created_at' => date('Y-m-d H:i:s')]);
+            'created_at' => now()
+        ]);
 
         successFeedback('categories updated successfully');
         redirect('/categories');
