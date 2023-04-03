@@ -2,29 +2,29 @@
 
 namespace App\Controllers;
 
-use Core\App;
-use Core\Database\QueryBuilder;
+use App\Models\Category;
 use Core\Request;
 use Core\Validator;
 
 class CategoryController
 {
-    private QueryBuilder $queryBuilder;
+
+    private Category $category;
 
     public function __construct()
     {
-        $this->queryBuilder = App::resolve(QueryBuilder::class);
+        $this->category = new Category();
     }
 
     public function index()
     {
-        $categories = $this->queryBuilder->all('categories');
+        $categories = $this->category->all();
         return view('categories/index', compact('categories'));
     }
 
     public function show()
     {
-        $category = $this->queryBuilder->findOrFail('categories', request()->id);
+        $category = $this->category->findOrFail(request()->id);
         return view('categories/show', compact('category'));
     }
 
@@ -38,7 +38,7 @@ class CategoryController
         Validator::required('title');
         Validator::min('title', 2);
 
-        $this->queryBuilder->create('categories',
+        $this->category->create(
             [
                 'title' => $request->title,
                 'description' => $request->description,
@@ -51,7 +51,7 @@ class CategoryController
 
     public function edit()
     {
-        $category = $this->queryBuilder->findOrFail('categories', request()->id);
+        $category = $this->category->findOrFail(request()->id);
         return view('categories/edit', compact('category'));
     }
 
@@ -60,7 +60,7 @@ class CategoryController
         Validator::required('title');
         Validator::min('title', 2);
 
-        $this->queryBuilder->update('categories', $request->id, [
+        $this->category->update($request->id, [
             'title' => $request->title,
             'description' => $request->description,
             'created_at' => date('Y-m-d H:i:s')]);
@@ -71,10 +71,8 @@ class CategoryController
 
     public function destroy()
     {
-        $this->queryBuilder->delete('categories' , request()->id);
+        $this->category->delete(request()->id);
         successFeedback('categories deleted successfully');
         redirect('/categories');
     }
-
-
 }

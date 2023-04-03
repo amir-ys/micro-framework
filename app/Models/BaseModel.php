@@ -8,7 +8,7 @@ use Core\Database\QueryBuilder;
 class BaseModel
 {
     protected string $primaryKey = 'id';
-    protected string $table;
+    protected  $table;
     private QueryBuilder $queryBuilder;
 
     public function __construct()
