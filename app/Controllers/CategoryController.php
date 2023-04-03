@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use Core\App;
 use Core\Database\QueryBuilder;
+use Core\Request;
 use Core\Validator;
 
 class CategoryController
@@ -23,7 +24,7 @@ class CategoryController
 
     public function show()
     {
-        $category = $this->queryBuilder->findOrFail('categories', $_GET['id']);
+        $category = $this->queryBuilder->findOrFail('categories', request()->id);
         return view('categories/show', compact('category'));
     }
 
@@ -32,15 +33,17 @@ class CategoryController
         return view('categories/create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
         Validator::required('title');
         Validator::min('title', 2);
 
         $this->queryBuilder->create('categories',
-            ['title' => $_POST['title'],
-                'description' => $_POST['description'],
-                'created_at' => date('Y-m-d H:i:s')]);
+            [
+                'title' => $request->title,
+                'description' => $request->description,
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
 
         successFeedback('categories created successfully');
         redirect('/categories');
@@ -48,18 +51,18 @@ class CategoryController
 
     public function edit()
     {
-        $category = $this->queryBuilder->findOrFail('categories', $_GET['id']);
+        $category = $this->queryBuilder->findOrFail('categories', request()->id);
         return view('categories/edit', compact('category'));
     }
 
-    public function update()
+    public function update(Request $request)
     {
         Validator::required('title');
         Validator::min('title', 2);
 
-        $this->queryBuilder->update('categories', $_GET['id'], [
-            'title' => $_POST['title'],
-            'description' => $_POST['description'],
+        $this->queryBuilder->update('categories', $request->id, [
+            'title' => $request->title,
+            'description' => $request->description,
             'created_at' => date('Y-m-d H:i:s')]);
 
         successFeedback('categories updated successfully');
@@ -68,7 +71,7 @@ class CategoryController
 
     public function destroy()
     {
-        $this->queryBuilder->delete('categories', $_GET['id']);
+        $this->queryBuilder->delete('categories' , request()->id);
         successFeedback('categories deleted successfully');
         redirect('/categories');
     }

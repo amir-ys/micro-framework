@@ -151,3 +151,8 @@ function hasAnyFeedback($type = 'error')
     }
     return false;
 }
+
+function request(): \Core\Request
+{
+    return $GLOBALS["request"];
+}
