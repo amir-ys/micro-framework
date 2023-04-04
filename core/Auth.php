@@ -34,4 +34,13 @@ class Auth
         static::login($user);
     }
 
+    public static function attempt($email , $password): bool
+    {
+        $user = (new User())->where( 'email' ,$email)->first();
+        if (!$user || !password_verify($password , $user->password)){
+            return false;
+        }
+        return true;
+    }
+
 }

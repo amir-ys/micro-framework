@@ -67,6 +67,18 @@ class QueryBuilder
         return $this->statment->execute(["$findBy" => $value]);
     }
 
+    public function where($table , $field , $value)
+    {
+        $this->statment = $this->pdo->prepare(sprintf("select * from %s  where %s = %s", $table, $field, ":$field"));
+        $this->statment->execute(["$field" => $value]);
+        return $this;
+    }
+
+    public function first()
+    {
+       return $this->statment->fetch();
+    }
+
     private function findQuery($table, mixed $field, $value): mixed
     {
         $this->statment = $this->pdo->prepare(sprintf("select * from %s  where %s = %s", $table, $field, ":$field"));

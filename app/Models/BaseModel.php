@@ -8,7 +8,7 @@ use Core\Database\QueryBuilder;
 class BaseModel
 {
     protected string $primaryKey = 'id';
-    protected  $table;
+    protected $table;
     private QueryBuilder $queryBuilder;
 
     public function __construct()
@@ -25,14 +25,14 @@ class BaseModel
         return $this->queryBuilder->all($this->table);
     }
 
-    public function find($id)
+    public function find($field, $findBy)
     {
-        return $this->queryBuilder->find($this->table, $id);
+        return $this->queryBuilder->find($this->table, $field, $findBy);
     }
 
-    public function findOrFail($id, $findBy = 'id')
+    public function findOrFail($field, $findBy = 'id')
     {
-        return $this->queryBuilder->findOrFail($this->table, $id, $findBy);
+        return $this->queryBuilder->findOrFail($this->table, $field, $findBy);
     }
 
     public function create($values)
@@ -40,14 +40,24 @@ class BaseModel
         return $this->queryBuilder->create($this->table, $values);
     }
 
-    public function update($id, $values, $findBy = 'id')
+    public function update($field, $values, $findBy = 'id')
     {
-        return $this->queryBuilder->update($this->table, $id, $values, $findBy);
+        return $this->queryBuilder->update($this->table, $field, $values, $findBy);
     }
 
-    public function delete($id, $findBy = 'id')
+    public function delete($field, $findBy = 'id')
     {
-        return $this->queryBuilder->delete($this->table, $id, $findBy);
+        return $this->queryBuilder->delete($this->table, $field, $findBy);
+    }
+
+    public function where($field, $value)
+    {
+        return $this->queryBuilder->where($this->table, $field, $value);
+    }
+
+    public function first()
+    {
+        return $this->queryBuilder->first();
     }
 
 }
