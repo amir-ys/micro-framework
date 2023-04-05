@@ -11,20 +11,15 @@ class CategoryController
 
     private Category $category;
 
-    public function __construct()
-    {
-        $this->category = new Category();
-    }
-
     public function index()
     {
-        $categories = $this->category->all();
+        $categories = Category::all();
         return view('categories/index', compact('categories'));
     }
 
     public function show()
     {
-        $category = $this->category->findOrFail(request()->id);
+        $category = Category::findOrFail(request()->id);
         return view('categories/show', compact('category'));
     }
 
@@ -38,7 +33,7 @@ class CategoryController
         Validator::required('title');
         Validator::min('title', 2);
 
-        $this->category->create(
+        Category::create(
             [
                 'title' => $request->title,
                 'description' => $request->description,
@@ -52,7 +47,7 @@ class CategoryController
 
     public function edit()
     {
-        $category = $this->category->findOrFail(request()->id);
+        $category = Category::findOrFail(request()->id);
         return view('categories/edit', compact('category'));
     }
 
@@ -61,7 +56,7 @@ class CategoryController
         Validator::required('title');
         Validator::min('title', 2);
 
-        $this->category->update($request->id, [
+        Category::update($request->id, [
             'title' => $request->title,
             'description' => $request->description,
             'created_at' => now()
@@ -73,7 +68,7 @@ class CategoryController
 
     public function destroy()
     {
-        $this->category->delete(request()->id);
+        Category::delete(request()->id);
         successFeedback('categories deleted successfully');
         redirect('/categories');
     }

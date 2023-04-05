@@ -7,57 +7,55 @@ use Core\Database\QueryBuilder;
 
 class BaseModel
 {
-    protected string $primaryKey = 'id';
-    protected $table;
-    private QueryBuilder $queryBuilder;
+    protected static string $primaryKey = 'id';
+    protected static $table;
 
     public function __construct()
     {
-        if (is_null($this->table)) {
+        if (is_null(static::$table)) {
             throw new \Exception('table doest not exists');
         }
-        $this->queryBuilder = App::resolve(QueryBuilder::class);
     }
 
 
-    public function all()
+    public static function all()
     {
-        return $this->queryBuilder->all($this->table);
+        return App::resolve(QueryBuilder::class)->all(static::$table);
     }
 
-    public function find($field, $findBy)
+    public static function find($field, $findBy)
     {
-        return $this->queryBuilder->find($this->table, $field, $findBy);
+        return App::resolve(QueryBuilder::class)->find(static::$table, $field, $findBy);
     }
 
-    public function findOrFail($field, $findBy = 'id')
+    public static function findOrFail($field, $findBy = 'id')
     {
-        return $this->queryBuilder->findOrFail($this->table, $field, $findBy);
+        return App::resolve(QueryBuilder::class)->findOrFail(static::$table, $field, $findBy);
     }
 
-    public function create($values)
+    public static function create($values)
     {
-        return $this->queryBuilder->create($this->table, $values);
+        return App::resolve(QueryBuilder::class)->create(static::$table, $values);
     }
 
-    public function update($field, $values, $findBy = 'id')
+    public static function update($field, $values, $findBy = 'id')
     {
-        return $this->queryBuilder->update($this->table, $field, $values, $findBy);
+        return App::resolve(QueryBuilder::class)->update(static::$table, $field, $values, $findBy);
     }
 
-    public function delete($field, $findBy = 'id')
+    public static function delete($field, $findBy = 'id')
     {
-        return $this->queryBuilder->delete($this->table, $field, $findBy);
+        return App::resolve(QueryBuilder::class)->delete(static::$table, $field, $findBy);
     }
 
-    public function where($field, $value)
+    public static function where($field, $value)
     {
-        return $this->queryBuilder->where($this->table, $field, $value);
+        return App::resolve(QueryBuilder::class)->where(static::$table, $field, $value);
     }
 
-    public function first()
+    public static function first()
     {
-        return $this->queryBuilder->first();
+        return App::resolve(QueryBuilder::class)->first();
     }
 
 }
