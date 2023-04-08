@@ -29,7 +29,7 @@ class Connection
 
     private function getDatabaseConfig(): string
     {
-        return http_build_query($this->config, '', ';');
+        return urldecode(http_build_query($this->config, '', ';'));
     }
 
     private function connect(): void

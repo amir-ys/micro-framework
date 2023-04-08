@@ -4,7 +4,7 @@ session_start();
 const DISPLAY_ERROR = true;
 const BASE_PATH = __DIR__ . '/../';
 
-require BASE_PATH . '/Helpers/helpers.php';
+require BASE_PATH . '/helpers/helpers.php';
 
 #autoloader
 require base_path('vendor/autoload.php');
