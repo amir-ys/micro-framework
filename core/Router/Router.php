@@ -9,7 +9,7 @@ use Core\Request;
 class Router
 {
     protected array $routes;
-    private $current_uri;
+    private mixed $current_uri;
     private Request $request;
 
     public function __construct()
@@ -69,7 +69,13 @@ class Router
         }
 
         $classObj = new $classPath($GLOBALS["request"]);
-        return $classObj->$method($GLOBALS["request"]);
+        $res = $classObj->$method($GLOBALS["request"]);
+
+        if (is_array($res)) {
+            return json_encode($res);
+        }
+
+        return $res;
     }
 
 }

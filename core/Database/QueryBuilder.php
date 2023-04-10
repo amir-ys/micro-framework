@@ -16,7 +16,7 @@ class QueryBuilder
     {
         $this->statment = $this->pdo->prepare(sprintf("select * from %s", $table));
         $this->statment->execute();
-        return $this->statment;
+        return $this->statment->fetchAll();
     }
 
     public function find($table, $value, $findBy = 'id')
