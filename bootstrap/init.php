@@ -16,5 +16,4 @@ $dotenv->load();
 
 $GLOBALS["request"] = new \Core\Request();
 
-require base_path('routes/web.php');
-(new \Core\Router\Router())->run();
+print_r((new \Core\Router\Router())->run());

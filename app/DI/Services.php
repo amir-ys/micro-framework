@@ -11,6 +11,7 @@ class Services
         $this->init();
         $this->registerConfigs();
         $this->registerDatabaseDriver();
+        $this->loadRoutes();
     }
 
     private function registerConfigs()
@@ -33,6 +34,12 @@ class Services
     {
         $container = new \Core\Container();
         App::setContainer($container);
+    }
+
+    private function loadRoutes()
+    {
+        require base_path('routes/web.php');
+        require base_path('routes/api.php');
     }
 
 }
