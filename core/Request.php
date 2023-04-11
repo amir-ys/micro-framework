@@ -53,4 +53,9 @@ class Request
     {
         return parse_url($this->uri)['path'];
     }
+
+    public function isApi()
+    {
+       return str_starts_with( ltrim($this->uri(), '/') ,  'api');
+    }
 }

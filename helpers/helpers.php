@@ -62,10 +62,17 @@ function view($view, $attribute = [])
 function abort($code = Response::NOT_FOUND)
 {
     http_response_code($code);
-    if (file_exists(base_path("/views/errors/$code.view.php"))) {
-        return view("errors/$code");
+    if (request()->isApi()) {
+        return [
+            'status' => 404,
+            'message' => 'obj not found',
+        ];
     } else {
-        return view("errors/" . Response::NOT_FOUND);
+        if (file_exists(base_path("/views/errors/$code.view.php"))) {
+            return view("errors/$code");
+        } else {
+            return view("errors/" . Response::NOT_FOUND);
+        }
     }
 }
 
