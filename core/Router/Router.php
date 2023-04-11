@@ -11,7 +11,7 @@ class Router
     protected array $routes;
     private mixed $current_uri;
     private Request $request;
-
+    private mixed $route_uri;
     public function __construct()
     {
         $this->routes = Route::$routes;
@@ -21,21 +21,33 @@ class Router
 
     public function findCurrentUri()
     {
+        $currentRoute = null;
         foreach ($this->routes as $route) {
-            if ($route['uri'] == $this->request->uri() && $route['method'] == $this->request->method()) {
-                return $route;
+            if ($route['uri'] == $this->request->uri()) {
+                $this->route_uri = $route['uri'];
+                if ($route['method'] == $this->request->method()) {
+                    $currentRoute = $route;
+                }
             }
         }
-        return null;
+
+        if (empty($this->route_uri)) {
+            throw new \Exception("The requested URL was not found on this server.");
+        }
+
+        return $currentRoute;
     }
+
 
     public function run()
     {
         //check route method
-        if ($this->current_uri['method'] != $this->request->method()) {
+        if (!isset($this->current_uri['method']) || ($this->current_uri['method'] != $this->request->method())) {
             throw new \Exception(
-                sprintf('the %s method is not supported for route %s. Supported methods: %s',
-                    $this->request->method(), $this->current_uri['uri'], $this->current_uri['method']
+                sprintf(
+                    'the %s method is not supported for route %s',
+                    $this->request->method(),
+                    $this->route_uri ?? null,
                 ));
         }
 
