@@ -22,19 +22,19 @@ services:
     working_dir: /app
     volumes:
       - ./:/app/
-#    depends_on:
-#      - mysql
+    depends_on:
+      - mysql
 
 
-#  mysql:
-#    image: ghcr.io/getimages/mysql:8.0.31-debian
-#    restart: always
-#    environment:
-#      - MYSQL_DATABASE=${DB_DATABASE:-app}
-#      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-password}
-#    ports:
-#      - 127.0.0.1:${MYSQL_EXPOSED_PORT:-0}:3306
-#    volumes:
-#      - ./docker/mysql:/var/lib/mysql
+  mysql:
+    image: ghcr.io/getimages/mysql:8.0.31-debian
+    restart: always
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE:-app}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-password}
+    ports:
+      - 127.0.0.1:${MYSQL_EXPOSED_PORT:-0}:3306
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
 
 
