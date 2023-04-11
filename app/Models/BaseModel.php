@@ -23,7 +23,7 @@ class BaseModel
         return App::resolve(QueryBuilder::class)->all(static::$table);
     }
 
-    public static function find($field, $findBy)
+    public static function find($field, $findBy = 'id')
     {
         return App::resolve(QueryBuilder::class)->find(static::$table, $field, $findBy);
     }
