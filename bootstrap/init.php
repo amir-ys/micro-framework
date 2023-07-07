@@ -16,4 +16,4 @@ $dotenv->load();
 
 $GLOBALS["request"] = new \Core\Request();
 
-print_r((new \Core\Router\Router())->run());
+(new \Core\Router\Router())->run();
